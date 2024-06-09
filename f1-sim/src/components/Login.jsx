@@ -1,13 +1,45 @@
 import "./style/login.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import GoogleButton from "react-google-button";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Alert from "@mui/material/Alert";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
+const defaultTheme = createTheme();
 
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="http://f1quiz.es/">
+        Formula One Quiz
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 function Login() {
   const [isLoginActive, setIsLoginActive] = useState(true);
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
   let navigate = useNavigate();
 
   const login = async (event) => {
@@ -18,6 +50,7 @@ function Login() {
   };
 
   async function postLogin(data) {
+    console.log(data);
     try {
       const response = await fetch("http://localhost:8080/login", {
         method: "POST",
@@ -39,6 +72,7 @@ function Login() {
         } else {
           setMsg("Unknown error, try again later");
         }
+        setShowAlert(true);
       }
     } catch (error) {
       // En caso de error de red u otro error técnico
@@ -46,140 +80,117 @@ function Login() {
       setMsg("Server error");
     }
   }
-  const toggleForm = () => {
-    setIsLoginActive(!isLoginActive);
-  };
 
   const handleGoogleLogin = async () => {
-    try{
+    try {
       const response = await fetch("http://localhost:8080/logingoogle");
       const url = await response.text();
-      window.location.href = url
+      window.location.href = url;
     } catch (error) {
       console.error("Error: ", error);
     }
-  }
-  return (
-    <>
-      <div className="loginContainer">
-        <div className="login">
-          <h2
-            className={isLoginActive ? "active" : "nonactive"}
-            onClick={toggleForm}
-          >
-            Log in
-          </h2>
-          <h2
-            className={!isLoginActive ? "active" : "nonactive"}
-            onClick={toggleForm}
-          >
-            Sign Up
-          </h2>
-
-          {isLoginActive ? (
-            <>
-              <input
-                type="email"
-                className="text"
-                name="username"
-                onChange={(event) => setMail(event.target.value)}
-              />
-              <span>mail</span>
-
-              <input
-                type="password"
-                className="text"
-                name="password"
-                onChange={(event) => setPassword(event.target.value)}
-              />
-              <span>password</span>
-
-              <button className="signin" onClick={login}>
-                Log in
-              </button>
-              <a className="message" color="red">
-                {msg}
-              </a>
-
-              <button type="button" class="login-with-google-btn" onClick={handleGoogleLogin}>
-                Sign in with Google
-              </button>
-            </>
-          ) : (
-            <Signup />
-          )}
-        </div>
-      </div>
-    </>
-  );
-}
-
-function Signup() {
-  const [mail, setMail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-
-  const [msg, setMsg] = useState("");
-
-  const signup = async (event) => {
-    event.preventDefault();
-    let user = {
-      name: name,
-      mail: mail,
-      password: password,
-    };
-    setMsg(String(await post(user)));
   };
 
-  async function post(user) {
-    return await fetch("http://localhost:8080/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.ok) return "User " + user.name + " created, now log in";
-        if (response.status === 409) return "Error";
-      })
-      .catch(() => {
-        return "Error creating user";
-      });
-  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    let user = {
+      email: data.get("email"),
+      password: data.get("password"),
+    };
+    postLogin(user);
+  };
   return (
     <>
-      <input
-        type="email"
-        className="text"
-        name="username"
-        onChange={(event) => setMail(event.target.value)}
-      />
-      <span>mail</span>
-
-      <input
-        type="text"
-        className="text"
-        name="username"
-        onChange={(event) => setName(event.target.value)}
-      />
-      <span>name</span>
-
-      <input
-        type="password"
-        minLength={6}
-        className="text"
-        name="password"
-        onChange={(event) => setPassword(event.target.value)}
-      />
-      <span>password</span>
-
-      <button className="signin" onClick={signup}>
-        Sign Up
-      </button>
-
-      <a className="message">{msg}</a>
+      <ThemeProvider theme={defaultTheme}>
+        {showAlert && <Alert severity="error">{msg}</Alert>}
+        <Grid container component="main" sx={{ height: "100vh" }}>
+          <CssBaseline />
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
+            sx={{
+              backgroundColor: "#00352F",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
+          >
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Inicia sesión
+              </Typography>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ mt: 1 }}
+              >
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Correo electronico"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Contraseña"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Iniciar Sesión
+                </Button>
+                <GoogleButton
+                  onClick={handleGoogleLogin}
+                />
+                <Grid container>
+                  <Grid item>
+                    <Link href="/register" variant="body2">
+                      {"¿No tienes cuenta? Crea una"}
+                    </Link>
+                  </Grid>
+                </Grid>
+                <Copyright sx={{ mt: 5 }} />
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </ThemeProvider>
     </>
   );
 }

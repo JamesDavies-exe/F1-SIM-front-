@@ -1,28 +1,34 @@
 import { useNavigate } from "react-router-dom"
+import { Box, Typography, Button } from '@mui/material';
 function LoginError(){
+  const navigate = useNavigate();
   let handleLogin = () => {
-    useNavigate("/login");
+    navigate("/login");
   }
     return(
         <>
-        <section className="home">
-        {/* <video className="videoTag" autoPlay loop muted>
-          <source src="film.mp4" type="video/mp4" />
-        </video> */}
-        <div class="homeDiv">
-          <div className="homeTitle">Please login</div>
-          <div className="homeDesc">
-            You need an account to start to play the Formula One quiz
-          </div>
-          <div className="btnDiv">
-            <button class="button" onClick={handleLogin()}>Login</button>
-          </div>
-        </div>
-
-        <div className="pictureDiv">
-          <img className="error" src="/background.jpg" alt="" />
-        </div>
-      </section>
+                <Box
+      sx={{
+        height: '90vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'black',
+        textAlign: 'center',
+        p: 2,
+      }}
+    >
+      <Typography variant="h2" component="h1" gutterBottom>
+        ERROR
+      </Typography>
+      <Typography variant="h5" component="h2" gutterBottom>
+        Parece que no has iniciado sesión
+      </Typography>
+      <Button variant="contained" color="primary" size="large" href="/login">
+        Iniciar Sesión
+      </Button>
+    </Box>
         </>
     )
 }
