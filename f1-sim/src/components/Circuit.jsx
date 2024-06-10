@@ -9,10 +9,16 @@ function Circuit(){
     const [circuits, setCircuits] = useState([]);
     const navigate = useNavigate();
     const [token] = useState(localStorage.getItem("token"))
+    const [user, setUser] = useState({});
 
     useEffect(() => {
+        getUser()
         getCircuits();
     }, [])
+
+    function getUser(){
+      console.log("Getting user...")
+    }
 
     async function getCircuits() {
         let response = await fetch("http://localhost:8080/getCircuits", {

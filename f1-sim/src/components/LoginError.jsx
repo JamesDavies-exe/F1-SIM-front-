@@ -25,7 +25,7 @@ function LoginError(){
       <Typography variant="h5" component="h2" gutterBottom>
         Parece que no has iniciado sesión
       </Typography>
-      <Button variant="contained" color="primary" size="large" href="/login">
+      <Button variant="contained" color="primary" size="large" onClick={() => navigate("/login")}>
         Iniciar Sesión
       </Button>
     </Box>

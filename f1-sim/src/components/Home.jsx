@@ -2,7 +2,9 @@ import "./style/home.css";
 import "./fonts/Formula1-Bold_web.ttf";
 import Navbar from "./Navbar"
 import { Box, Typography, Button } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 function Home() {
+  const navigate = useNavigate();
   return (
     <>
     <Navbar></Navbar>
@@ -24,7 +26,7 @@ function Home() {
       <Typography variant="h5" component="h2" gutterBottom>
         Descubre tu conocimiento sobre la Formula 1 y compite para llegar a lo más alto
       </Typography>
-      <Button variant="contained" color="primary" size="large">
+      <Button variant="contained" color="primary" size="large" onClick={() => navigate("/circuit")}>
         Jugar
       </Button>
     </Box>
