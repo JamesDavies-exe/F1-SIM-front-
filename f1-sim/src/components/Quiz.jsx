@@ -1,9 +1,9 @@
 import "./style/quiz.css";
 import LoginError from "./LoginError";
 import { useState, useEffect } from "react";
-import { json, useParams } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { Box, Button, Card, CardContent, Typography, List, ListItem } from '@mui/material';
 import RankingTable from "./RankingTable";
 
 function Results({ ranking }) {
@@ -11,11 +11,13 @@ function Results({ ranking }) {
     <>
       <section className="quizSection">
         <div className="quizContainer">
-        {ranking.map((entry, index) => (
-          <li key={index}>
-            {index + 1}- {entry.user.name} ({entry.score} points)
-          </li>
-        ))}
+          <List>
+            {ranking.map((entry, index) => (
+              <ListItem key={index}>
+                {index + 1}- {entry.user.name} ({entry.score} points)
+              </ListItem>
+            ))}
+          </List>
         </div>
       </section>
     </>
@@ -33,31 +35,37 @@ function Quiz() {
   const location = useLocation();
   const circuitId = location.state;
   const navigate = useNavigate();
+  const [optionColors, setOptionColors] = useState({}); // Estado para los colores de las opciones
+
   useEffect(() => {
-    setFinish(false)
+    setFinish(false);
     setToken(localStorage.getItem("token"));
-    getQuestions(location.state);
-    console.log(questions)
+    getQuestions(circuitId);
+    console.log(questions);
   }, []);
+
   const handleQuestions = (option) => {
-    document.getElementById(option).style.backgroundColor = "white";
-    //Mostrar el resultado
+    const newOptionColors = {};
     if (option === actualQuestion.correct) {
-      console.log("Correct +5 points");
+      newOptionColors[option] = "green";
       setPoints(points + 5);
     } else {
-      console.log("Incorrect +0 points");
+      newOptionColors[option] = "red";
     }
-    //Pasar a la siguiente pregunta
-    if (actualIndex < questions.length - 1) {
-      setActualIndex(actualIndex + 1);
-    } else {
-      sendScore(points, location.state);
-      setFinish(true);
-    }
+    setOptionColors(newOptionColors);
+
+    setTimeout(() => {
+      if (actualIndex < questions.length - 1) {
+        setActualIndex(actualIndex + 1);
+        setOptionColors({});
+      } else {
+        sendScore(points, location.state);
+        setFinish(true);
+      }
+    }, 1000); // Espera 1 segundo antes de pasar a la siguiente pregunta
   };
 
-  async function sendScore (score, id){
+  async function sendScore(score, id) {
     let info = {
       score: score,
       circuitId: parseInt(location.state)
@@ -71,29 +79,26 @@ function Quiz() {
         },
         body: JSON.stringify(info),
       });
-      if(response.ok){
+      if (response.ok) {
         let results = await response.json();
-        console.log(results)
+        console.log(results);
         setRanking(results);
       }
     } catch (error) {
-      // En caso de error de red u otro error técnico
       console.error("Error al realizar la petición:", error);
     }
   }
 
   async function getQuestions(id) {
-    // Getting all the questions
     let allQuestions = [];
     let response = await fetch("http://localhost:8080/getQuestions/" + id);
     if (response.ok) {
       let json = await response.json();
-      console.log(json)
+      console.log(json);
       allQuestions = json;
     } else {
       alert("Error-HTTP: " + response.status);
     }
-    // Creating question
     let questionAr = [];
     allQuestions.forEach(question => {
       let questionObj = {
@@ -109,30 +114,43 @@ function Quiz() {
   if (token == null) {
     return (
       <>
-        <LoginError></LoginError>
+        <LoginError />
       </>
     );
   }
+
   return (
     <>
       {finish ? (
         <RankingTable ranking={ranking} />
       ) : (
-        <section className="quizSection">
-          <div className="quizContainer">
-            <div className="quizQuestion">{actualQuestion?.question}</div>
-          </div>
+        <Box className="quizSection" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Card className="quizContainer" sx={{ width: '80%', marginBottom: 2 }}>
+            <CardContent>
+              <Typography variant="h5" className="quizQuestion">{actualQuestion?.question}</Typography>
+            </CardContent>
+          </Card>
           {actualQuestion?.options.map((option, key) => (
-            <div
-              className={"quizOption"}
+            <Button
+              variant="contained"
+              className="quizOption"
               id={option}
               key={key}
               onClick={() => handleQuestions(option)}
+              sx={{
+                marginBottom: 1,
+                width: '80%',
+                backgroundColor: optionColors[option] || 'blue',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: optionColors[option] || 'blue',
+                }
+              }}
             >
               {option}
-            </div>
+            </Button>
           ))}
-        </section>
+        </Box>
       )}
     </>
   );

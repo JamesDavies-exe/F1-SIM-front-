@@ -1,72 +1,20 @@
-.home{
-  background-image: url("/bgp.jpg");
-}
-.homeDiv{
-  width: 50%;
-  height: 90vh;
-  display: flex;
-  flex-direction: column; /* Alinea los hijos verticalmente uno debajo del otro */
-  justify-content: center; /* Centra los hijos verticalmente en el contenedor */
-  align-items: center;
-  position: absolute;
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
 }
 
-.pictureDiv{
-  width: 50%;
-  height: 90vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  float: right;
+.video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 30%;
 }
 
-.pictureDiv img{
-  border-radius: 4px;
-  width: 50%;
-  -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-}
-@keyframes mymove {
-  50% {box-shadow: 0px 0px 75px 1px #ee0000;}
-}
-
-.error{
-  animation: mymove 3.5s infinite;
-}
-
-.homeTitle{
-  width: 80%;
-  font-size: 5vw;
-  margin-left: 20%;
-}
-
-
-.homeDesc{
-  margin-top: 20px;
-  width: 80%;
-  margin-left: 20%;
-}
-
-.btnDiv{
-  margin-top: 40px;
-  width: 80%;
-  margin-left: 20%;
-}
-
-.button {
-  background-color: #ffffff00;
-  color: black;
-  width: 10.5em;
-  height: 2.9em;
-  border: black 0.2em solid;
-  border-radius: 6px;
-  transition: all 0.6s ease;
-}
-
-.button:hover {
-  background-color: #ee0000;
-  border-color: #ee0000;
+body{
   color: white;
-  cursor: pointer;
 }

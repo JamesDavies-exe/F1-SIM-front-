@@ -8,6 +8,12 @@ function Home() {
   return (
     <>
     <Navbar></Navbar>
+    <div className="video-background">
+        <video autoPlay loop muted>
+          <source src="/film.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
         <Box
       sx={{
         height: '90vh',

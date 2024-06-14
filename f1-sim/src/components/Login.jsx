@@ -1,12 +1,11 @@
 import "./style/login.css";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect} from "react";
+import { useNavigate, Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import GoogleButton from "react-google-button";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -42,6 +41,15 @@ function Login() {
   const [showAlert, setShowAlert] = useState(false);
   let navigate = useNavigate();
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    if (token) {
+      localStorage.setItem('token', token);
+      navigate('/');
+    }
+  }, []);
   const login = async (event) => {
     event.preventDefault();
     const data = { email: mail, password: password };
@@ -175,13 +183,10 @@ function Login() {
                 >
                   Iniciar Sesión
                 </Button>
-                <GoogleButton
-                  onClick={handleGoogleLogin}
-                />
                 <Grid container>
                   <Grid item>
-                    <Link href="/register" variant="body2">
-                      {"¿No tienes cuenta? Crea una"}
+                    <Link to={"/register"}>
+                      ¿No tienes cuenta? Crea una
                     </Link>
                   </Grid>
                 </Grid>

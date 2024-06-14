@@ -1,12 +1,13 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
-import Navbar from "./Navbar"
+import Navbar from "./Navbar";
 
 const RankingTable = ({ ranking }) => {
-  console.log(ranking);
+  const username = localStorage.getItem("username");
+
   return (
     <TableContainer component={Paper}>
-      <Navbar></Navbar>
+      <Navbar />
       <Typography variant="h6" component="div" style={{ padding: '16px' }}>
         Ranking
       </Typography>
@@ -20,10 +21,15 @@ const RankingTable = ({ ranking }) => {
         </TableHead>
         <TableBody>
           {ranking.map((entry, index) => (
-            <TableRow key={index}>
+            <TableRow 
+              key={index}
+              sx={{
+                backgroundColor: entry.user.name === username ? '#eef' : 'inherit'
+              }}
+            >
               <TableCell>{index + 1}</TableCell>
               <TableCell>{entry.user.name}</TableCell>
-              <TableCell>{entry.score}</TableCell>
+              <TableCell>{entry.scored}</TableCell>
             </TableRow>
           ))}
         </TableBody>
