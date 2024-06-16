@@ -45,7 +45,7 @@ function Register() {
 
   async function sendRegister(user) {
     console.log(user);
-    return await fetch("http://localhost:8080/register", {
+    return await fetch("https://www191.cfgs.esliceu.net/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,16 +63,6 @@ function Register() {
   }
   const toggleForm = () => {
     setIsLoginActive(!isLoginActive);
-  };
-
-  const handleGoogleLogin = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/logingoogle");
-      const url = await response.text();
-      window.location.href = url;
-    } catch (error) {
-      console.error("Error: ", error);
-    }
   };
 
   const handleSubmit = (event) => {
