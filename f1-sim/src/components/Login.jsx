@@ -60,7 +60,7 @@ function Login() {
   async function postLogin(data) {
     console.log(data);
     try {
-      const response = await fetch("http://localhost:8080/login", {
+      const response = await fetch("https://www191.cfgs.esliceu.net/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,16 +88,6 @@ function Login() {
       setMsg("Server error");
     }
   }
-
-  const handleGoogleLogin = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/logingoogle");
-      const url = await response.text();
-      window.location.href = url;
-    } catch (error) {
-      console.error("Error: ", error);
-    }
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();

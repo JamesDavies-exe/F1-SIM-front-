@@ -21,7 +21,7 @@ function Circuit() {
     }, []);
 
     async function getUser() {
-        let response = await fetch("http://localhost:8080/getUser", {
+        let response = await fetch("https://www191.cfgs.esliceu.net/getUser", {
             headers: {
                 "Authorization": localStorage.getItem("token")
             }
@@ -31,7 +31,7 @@ function Circuit() {
     }
 
     async function getCircuits() {
-        let response = await fetch("http://localhost:8080/getCircuits", {
+        let response = await fetch("https://www191.cfgs.esliceu.net/getCircuits", {
             headers: {
                 "Authorization": token
             }
@@ -45,7 +45,7 @@ function Circuit() {
     }
 
     async function saveCircuitTitle(circuitId) {
-        let response = await fetch(`http://localhost:8080/updateCircuit/${circuitId}`, {
+        let response = await fetch(`https://www191.cfgs.esliceu.net/${circuitId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
@@ -62,7 +62,7 @@ function Circuit() {
     }
 
     async function deleteCircuit() {
-        let response = await fetch(`http://localhost:8080/deleteCircuit/${circuitToDelete}`, {
+        let response = await fetch(`https://www191.cfgs.esliceu.net/${circuitToDelete}`, {
             method: 'DELETE',
             headers: {
                 "Authorization": token

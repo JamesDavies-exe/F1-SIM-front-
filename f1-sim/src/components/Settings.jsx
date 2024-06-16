@@ -26,7 +26,7 @@ function Settings() {
         return;
     }
 
-    let response = await fetch("http://localhost:8080/changePassword", {
+    let response = await fetch("https://www191.cfgs.esliceu.net/changePassword", {
       method: 'PUT',
       headers: {
         "Content-Type": "application/json",

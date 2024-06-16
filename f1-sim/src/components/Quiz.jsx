@@ -71,7 +71,7 @@ function Quiz() {
       circuitId: parseInt(location.state)
     }
     try {
-      const response = await fetch("http://localhost:8080/saveScore", {
+      const response = await fetch("https://www191.cfgs.esliceu.net/saveScore", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +91,7 @@ function Quiz() {
 
   async function getQuestions(id) {
     let allQuestions = [];
-    let response = await fetch("http://localhost:8080/getQuestions/" + id);
+    let response = await fetch("https://www191.cfgs.esliceu.net/getQuestions/" + id);
     if (response.ok) {
       let json = await response.json();
       console.log(json);

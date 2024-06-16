@@ -11,7 +11,7 @@ function Results(){
 
     }, [])
     async function getRanking(id){
-        let response = await fetch("http://localhost:8080/getRanking/" + id.circuitId);
+        let response = await fetch("https://www191.cfgs.esliceu.net/getRanking/" + id.circuitId);
     if (response.ok) {
       let json = await response.json();
       setRanking(json);
