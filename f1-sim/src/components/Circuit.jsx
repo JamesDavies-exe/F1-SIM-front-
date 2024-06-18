@@ -45,7 +45,7 @@ function Circuit() {
     }
 
     async function saveCircuitTitle(circuitId) {
-        let response = await fetch(`https://www191.cfgs.esliceu.net/${circuitId}`, {
+        let response = await fetch(`https://www191.cfgs.esliceu.net/updateCircuit/${circuitId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
