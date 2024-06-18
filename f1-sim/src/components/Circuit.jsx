@@ -62,7 +62,7 @@ function Circuit() {
     }
 
     async function deleteCircuit() {
-        let response = await fetch(`https://www191.cfgs.esliceu.net/${circuitToDelete}`, {
+        let response = await fetch(`https://www191.cfgs.esliceu.net/deleteCircuit/${circuitToDelete}`, {
             method: 'DELETE',
             headers: {
                 "Authorization": token
