@@ -47,7 +47,7 @@ function Login() {
 
     if (token) {
       localStorage.setItem('token', token);
-      navigate('/');
+      navigate('/circuits');
     }
   }, []);
   const login = async (event) => {
