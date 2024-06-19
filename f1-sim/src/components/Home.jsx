@@ -19,10 +19,7 @@ function Home() {
     <div class="overlay"></div>
     <div class="text">
       <h3>Formula One Quiz</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat.</p>
+      <p>Compite con otros usuarios en cuestionarios sobre Formula 1 alrededor de los 24 circuitos de todo el mundo</p>
       <Link to={"/login"}>Empezar</Link>
     </div>
   </section>
