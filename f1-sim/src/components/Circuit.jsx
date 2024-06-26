@@ -51,7 +51,7 @@ function Circuit() {
                 "Content-Type": "application/json",
                 "Authorization": token
             },
-            body: editedTitle
+            body: JSON.stringify({ title: editedTitle }) // updated to send JSON
         });
         if (response.ok) {
             setEditingCircuitId(null);
@@ -90,6 +90,14 @@ function Circuit() {
         setSnackbarOpen(false);
     };
 
+    const navigateToAddCircuit = () => {
+        navigate('/add');
+    };
+
+    const navigateToEditCircuit = (circuitId) => {
+        navigate(`/edit/${circuitId}`);
+    };
+
     if (token == null) {
         return (
             <>
@@ -103,6 +111,11 @@ function Circuit() {
             <Navbar />
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
                 <Typography variant="h4" color={"black"}>Circuits</Typography>
+                {user.role === "admin" && (
+                    <Button variant="contained" color="primary" onClick={navigateToAddCircuit}>
+                        Añadir Circuito
+                    </Button>
+                )}
             </Box>
             <div>
                 {circuits.map(circuit => (
@@ -138,10 +151,7 @@ function Circuit() {
                                             <Button
                                                 variant="contained"
                                                 color="primary"
-                                                onClick={() => {
-                                                    setEditingCircuitId(circuit.id);
-                                                    setEditedTitle(circuit.name);
-                                                }}
+                                                onClick={() => navigateToEditCircuit(circuit.id)}
                                             >
                                                 Editar
                                             </Button>

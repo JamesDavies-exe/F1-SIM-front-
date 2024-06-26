@@ -8,6 +8,8 @@ import Circuit from "./components/Circuit.jsx";
 import Register from "./components/Register.jsx";
 import LoginError from "./components/LoginError.jsx";
 import Settings from "./components/Settings.jsx";
+import AddCircuit from "./components/AddCircuit.jsx";
+import EditCircuit from "./components/EditCircuit.jsx";
 import { AnimatePresence } from "framer-motion";
 import "./App.css";
 import Results from "./components/Results.jsx";
@@ -26,6 +28,8 @@ function App() {
             <Route path="/register" Component={Register}></Route>
             <Route path="/loginError" Component={LoginError}></Route>
             <Route path="/settings" Component={Settings}></Route>
+            <Route path="/add" Component={AddCircuit}></Route>
+            <Route path="/edit" Component={EditCircuit}></Route>
           </Routes>
         </AnimatePresence>
       </Router>
