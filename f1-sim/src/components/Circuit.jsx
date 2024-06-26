@@ -3,6 +3,30 @@ import { useNavigate } from 'react-router-dom';
 import LoginError from "./LoginError";
 import { Card, CardContent, Typography, Button, TextField, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, Alert } from '@mui/material';
 import Navbar from "./Navbar";
+import { styled } from '@mui/system';
+
+const StyledCard = styled(Card)({
+    margin: '10px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    transition: 'transform 0.3s ease',
+    '&:hover': {
+        transform: 'scale(1.05)',
+    },
+});
+
+const TitleTypography = styled(Typography)({
+    marginBottom: '20px',
+    fontWeight: 'bold',
+});
+
+const CircuitContainer = styled(Box)({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+});
 
 function Circuit() {
     const [circuits, setCircuits] = useState([]);
@@ -110,16 +134,16 @@ function Circuit() {
         <>
             <Navbar />
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-                <Typography variant="h4" color={"black"}>Circuits</Typography>
+                <TitleTypography variant="h4" color={"black"}>Circuits</TitleTypography>
                 {user.role === "admin" && (
                     <Button variant="contained" color="primary" onClick={navigateToAddCircuit}>
                         Añadir Circuito
                     </Button>
                 )}
             </Box>
-            <div>
+            <CircuitContainer>
                 {circuits.map(circuit => (
-                    <Card key={circuit.id} style={{ margin: '10px', display: "flex" }}>
+                    <StyledCard key={circuit.id}>
                         <CardContent>
                             {editingCircuitId === circuit.id ? (
                                 <>
@@ -127,27 +151,31 @@ function Circuit() {
                                         label="Título del Circuito"
                                         value={editedTitle}
                                         onChange={(e) => setEditedTitle(e.target.value)}
+                                        fullWidth
+                                        margin="normal"
                                     />
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() => saveCircuitTitle(circuit.id)}
-                                    >
-                                        Guardar
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        onClick={() => setEditingCircuitId(null)}
-                                    >
-                                        Cancelar
-                                    </Button>
+                                    <Box mt={2} display="flex" justifyContent="space-between">
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => saveCircuitTitle(circuit.id)}
+                                        >
+                                            Guardar
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            onClick={() => setEditingCircuitId(null)}
+                                        >
+                                            Cancelar
+                                        </Button>
+                                    </Box>
                                 </>
                             ) : (
                                 <>
                                     <Typography variant="h6">Ronda: {circuit.id}</Typography>
                                     <Typography variant="subtitle1">GP {circuit.name}</Typography>
                                     {user.role === "admin" ? (
-                                        <>
+                                        <Box mt={2} display="flex" justifyContent="space-between">
                                             <Button
                                                 variant="contained"
                                                 color="primary"
@@ -162,7 +190,7 @@ function Circuit() {
                                             >
                                                 Eliminar
                                             </Button>
-                                        </>
+                                        </Box>
                                     ) : (
                                         circuit.done ? (
                                             <Button
@@ -185,9 +213,9 @@ function Circuit() {
                                 </>
                             )}
                         </CardContent>
-                    </Card>
+                    </StyledCard>
                 ))}
-            </div>
+            </CircuitContainer>
 
             <Dialog
                 open={deleteDialogOpen}
