@@ -59,7 +59,7 @@ function AddCircuit() {
         });
 
         if (response.ok) {
-            setSnackbarMessage("Circuito creado con éxito.");
+            setSnackbarMessage("Circuito creado con éxito..");
             setSnackbarOpen(true);
         } else {
             setSnackbarMessage("Error al crear el circuito.");
