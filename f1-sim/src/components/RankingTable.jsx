@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
 import Navbar from "./Navbar";
+import "./style/circuit.css"
 
 const RankingTable = ({ ranking }) => {
   const username = localStorage.getItem("username");
